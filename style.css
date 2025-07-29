@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom right, #ff6ec4, #7873f5);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  text-align: center;
+  animation: openCard 3s ease-out forwards;
+  transform: scale(0);
+}
+
+@keyframes openCard {
+  to {
+    transform: scale(1);
+  }
+}
+
+h1 {
+  color: #ff4b91;
+}
+
+p {
+  color: #333;
+  font-size: 18px;
+}
