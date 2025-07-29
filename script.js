@@ -1,47 +1,53 @@
-// Zarreen's Birthday Date
-const birthdayDate = new Date("September 19, 2025 00:00:00").getTime();
+window.onload = function () {
+  const card = document.getElementById("card");
+  const popup = document.getElementById("popup");
+  const countdown = document.getElementById("countdown");
 
-// HTML elements
-const countdownElement = document.getElementById("countdown");
-const card = document.getElementById("card");
-const audio = document.querySelector("audio");
-const popup = document.getElementById("popup");
+  // 🎯 Target date: 19 September, 00:00:00
+  const birthdayDate = new Date("September 19, 2025 00:00:00").getTime();
 
-// Countdown Logic
-const countdown = setInterval(() => {
-  const now = new Date().getTime();
-  const distance = birthdayDate - now;
+  const countdownInterval = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = birthdayDate - now;
 
-  if (distance <= 0) {
-    clearInterval(countdown);
-    countdownElement.innerHTML = "🎂 It's Zarreen's Birthday Today! 🎉";
+    if (distance <= 0) {
+      clearInterval(countdownInterval);
+      countdown.style.display = "none";
+      showBirthday();
+    } else {
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Show card, play music, show popup
+      countdown.innerHTML = ⏳ Unlocking in: ${days}d ${hours}h ${minutes}m ${seconds}s;
+    }
+  }, 1000);
+
+  function showBirthday() {
     card.style.display = "block";
-    if (audio) audio.play();
-    if (popup) popup.style.display = "flex";
+    setTimeout(() => {
+      card.style.animation = "popup 2s ease-in-out forwards";
+      popup.style.display = "flex";
 
-    startFireworks(); // fireworks function
-  } else {
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    countdownElement.innerHTML = ⏳ ${days}d ${hours}h ${minutes}m ${seconds}s left;
-
-    // Hide until birthday
-    card.style.display = "none";
-    if (popup) popup.style.display = "none";
+      // Fireworks start
+      const container = document.getElementById("fireworks-canvas");
+      const fireworks = new Fireworks(container, {
+        hue: { min: 0, max: 360 },
+        rocketsPoint: 50,
+        speed: 2,
+        acceleration: 1.05,
+        friction: 0.97,
+        gravity: 1.5,
+        particles: 100,
+        trace: 3,
+        explosion: 6
+      });
+      fireworks.start();
+    }, 1000);
   }
-}, 1000);
+};
 
-// Close popup
 function closePopup() {
   document.getElementById("popup").style.display = "none";
-}
-
-// Placeholder fireworks
-function startFireworks() {
-  console.log("Fireworks will start 🎆");
 }
